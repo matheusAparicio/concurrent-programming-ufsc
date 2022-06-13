@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "globals.h"
 
+// Acredito que vamos precisar de um total de mesas!
 queue_t *students_queue = NULL;
 table_t *table = NULL;
 buffet_t *buffets_ref = NULL;

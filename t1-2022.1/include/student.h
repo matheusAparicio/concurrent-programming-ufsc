@@ -15,7 +15,7 @@ typedef struct student
 } student_t;
 
 /**
-* @brief Inicializa um estudente.
+* @brief Inicializa um estudante.
 * 
 * @return student_t* 
 */

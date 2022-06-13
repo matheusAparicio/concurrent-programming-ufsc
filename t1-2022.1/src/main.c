@@ -14,7 +14,7 @@
 config_t parse (int argc, char **argv)
 {
     int c;
-    config_t config = { 50, 2, 10, 5 };
+    config_t config = { 2, 2, 10, 5 };     // { 50, 2, 10, 5 }
 
     while ((c = getopt(argc, argv, "n:b:t:s:h")) != -1) {
         switch (c) {
@@ -67,7 +67,7 @@ int main (int argc, char **argv)
     
     /* Inicializa o gerador de números aleatórios. */
     srand(time(NULL));
-
+ 
     /* Configura o parse de argumentos. */
    config_t config = parse(argc, argv);
 
