@@ -34,7 +34,7 @@ extern void worker_gate_finalize(worker_gate_t *self);
 extern void* worker_gate_run();
 
 /**
- * @brief Chegou a vez do próximo! Função que faz com que o funcionário retire um estudante da fila.
+ * @brief Chegou a vez do próximo! Função que faz c--om que o funcionário retire um estudante da fila.
  * 
  */
 extern void worker_gate_remove_queue_student();

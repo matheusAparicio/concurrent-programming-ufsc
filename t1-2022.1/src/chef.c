@@ -6,8 +6,14 @@
 void *chef_run()
 {
     /* Insira sua lógica aqui */
+    // A cada aluno que se serve no buffet verifica se têm alguma bacia vazia
+
     while (TRUE)
     {
+        //if chef_check_food(){
+        //    chef_put_food();
+        //}
+        
         msleep(5000); /* Pode retirar este sleep quando implementar a solução! */
     }
     
@@ -22,6 +28,8 @@ void chef_put_food()
 void chef_check_food()
 {
     /* Insira sua lógica aqui */
+    // Verifica as bacias dos i Buffets
+    //buffets[i]._meal[j]
 }
 
 /* --------------------------------------------------------- */

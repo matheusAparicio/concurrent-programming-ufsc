@@ -13,7 +13,7 @@ void *buffet_run(void *arg)
     {
         /* Cada buffet possui: Arroz, Feijão, Acompanhamento, Proteína e Salada */
         /* Máximo de porções por bacia (40 unidades). */
-        _log_buffet(self);
+        _log_buffet(self);  // * provoca os prints na tela
 
         msleep(5000); /* Pode retirar este sleep quando implementar a solução! */
     }
@@ -30,7 +30,7 @@ void buffet_init(buffet_t *self, int number_of_buffets)
         self[i]._id = i;
 
         /* Inicia com 40 unidades de comida em cada bacia */
-        for(j = 0; j < 5; j++)
+        for(j = 0; j < 5; j++)  // 5 é o número de bandejas
             self[i]._meal[j] = 40;
 
         for(j= 0; j< 5; j++){
