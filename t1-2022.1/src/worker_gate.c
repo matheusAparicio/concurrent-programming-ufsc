@@ -27,12 +27,23 @@ void worker_gate_look_buffet()
     /* Insira aqui sua lógica */
     // * Observa se existem buffets com espaços livres
     // * Segura a thread enquanto não houver espaço nos buffets?
+    int pode_passar = 0;
+    int buffet_livre_index = 0;
+    int buffet_livre_lado = 0; // 0 = esquerda e 1 = direita
 
     // Loop que passa por todos os buffets
     for (int i = 0; i < globals_get_buffet_number(); i++) {
         printf("\nOlhou o buffet de id %d\n", (globals_get_buffets() + i)->_id);
+        // passa por todos os buffets do primeiro ao último, da esquerda pra direita, verificando o primeiro que estiver livre
+        // caso encontre algum livre, pode_passar fica true e buffet_livre_index e buffet_livre_lado sao atualizados
     }
-    //worker_gate_insert_queue_buffet
+
+    if (pode_passar) {
+        //worker_gate_insert_queue_buffet
+    } else {
+
+    }
+
 
 }
 
