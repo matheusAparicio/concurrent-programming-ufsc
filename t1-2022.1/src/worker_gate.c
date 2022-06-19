@@ -39,23 +39,27 @@ void worker_gate_look_buffet()
             buffet_livre_index = i;
             buffet_livre_lado = 0;
             globals_set_worker_gate_can_pass(TRUE);
+            break;
         } else if (globals_sum_all_elements((globals_get_buffets() + i)->queue_right, 5) < 5) { // verifica se a soma de pessoas na fila direita é menor que 5
             buffet_livre_index = i;
             buffet_livre_lado = 1;
             globals_set_worker_gate_can_pass(TRUE);
+            break;
+        } else {
+            globals_set_worker_gate_can_pass(FALSE);
         }
         // passa por todos os buffets do primeiro ao último, da esquerda pra direita, verificando o primeiro que estiver livre
         // caso encontre algum livre, pode_passar fica true e buffet_livre_index e buffet_livre_lado sao atualizados
     }
 
     if (globals_get_worker_gate_can_pass()) {
-        printf("\n%d\n", buffet_livre_index);
-        printf("\n%d\n", buffet_livre_lado);
+        printf("\nbuffet_livre_index: %d\n", buffet_livre_index);
+        printf("\nbuffet_livre_lado: %d\n", buffet_livre_lado);
         //worker_gate_insert_queue_buffet
     } else {
         while (globals_get_worker_gate_can_pass() == FALSE) {
             msleep(500);
-            worker_gate_look_buffet()
+            worker_gate_look_buffet();
         }
     }
 
@@ -84,7 +88,6 @@ void *worker_gate_run(void *arg)
     }
 
     printf("worker_gate_run saiu do loop");
-    free(proximo);
     pthread_exit(NULL);
 }
 
