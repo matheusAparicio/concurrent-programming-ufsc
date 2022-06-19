@@ -4,7 +4,9 @@
 #include "globals.h"
 #include "config.h"
 
-student_t* proximo;  // Variável que guarda o estudante que irá passar a catraca
+student_t* proximo;     // Variável que guarda o estudante que irá passar a catraca
+int buffet_livre_index; // Usado para indicar o buffet que student será colocado
+int buffet_livre_lado;  // Usado para indicar o lado do buffet que student será colocado
 
 void worker_gate_look_queue()
 {
@@ -27,8 +29,8 @@ void worker_gate_look_buffet()
     /* Insira aqui sua lógica */
     // * Observa se existem buffets com espaços livres
     // * Segura a thread enquanto não houver espaço nos buffets?
-    int buffet_livre_index = 0;
-    int buffet_livre_lado = 0; // 0 = esquerda e 1 = direita
+    buffet_livre_index = 0;
+    buffet_livre_lado = 0; // 0 = esquerda e 1 = direita
 
     // Loop que passa por todos os buffets
     for (int i = 0; i < globals_get_buffet_number(); i++) {
@@ -48,17 +50,21 @@ void worker_gate_look_buffet()
         } else {
             globals_set_worker_gate_can_pass(FALSE);
         }
+        
+        // *Variaveis buffet_livre_index buffet_livre_lado atualizadas;
         // passa por todos os buffets do primeiro ao último, da esquerda pra direita, verificando o primeiro que estiver livre
         // caso encontre algum livre, pode_passar fica true e buffet_livre_index e buffet_livre_lado sao atualizados
     }
 
     if (globals_get_worker_gate_can_pass()) {
+        // Dados nescessários para enviar o estudante para o buffet:
         printf("\nbuffet_livre_index: %d\n", buffet_livre_index);
-        printf("\nbuffet_livre_lado: %d\n", buffet_livre_lado);
-        //worker_gate_insert_queue_buffet
+        // Retor
+        printf("\nbuffet_livre_lado: %d\n", buffet_livre_lado);     
+        //!worker_gate_insert_queue_buffet()   // * Insere no buffet usando buffet_livre_index buffet_livre_lado
     } else {
-        while (globals_get_worker_gate_can_pass() == FALSE) {
-            msleep(500);
+        while (globals_get_worker_gate_can_pass() == FALSE) {   
+            msleep(500);        // Aguarda um pouco para verificar novamente
             worker_gate_look_buffet();
         }
     }
@@ -78,9 +84,10 @@ void *worker_gate_run(void *arg)
     while (all_students_entered == FALSE)
     {
         printf("worker_gate_run está em loop");
-        worker_gate_look_queue(); // * Pega id estudante
-        worker_gate_look_buffet(); // * Observa pra qual buffet mandar
-        worker_gate_remove_student();
+        worker_gate_look_queue();       // * Pega id estudante
+        worker_gate_look_buffet();      // * Observa pra qual buffet mandar
+        worker_gate_remove_student();   // * Remove o estudante da fila, proximo = student_t*
+        // Variáveis atualizadas: proximo, buffet_livre_index, buffet_livre_lado;
         msleep(5000); /* Pode retirar este sleep quando implementar a solução! */
         all_students_entered = globals_get_all_students_entered();
         number_students = globals_get_students();
@@ -107,6 +114,7 @@ void worker_gate_finalize(worker_gate_t *self)
 void worker_gate_insert_queue_buffet(student_t *student)
 {
     /* Insira aqui sua lógica */
-    // * Verificar fila livre e mandar o primeiro da fila externa
-    // buffet_queue_insert(buffet_t *self, student_t *student)
+
+    //buffet_queue_insert(buffet_t *self, student_t *student)
+    //! buffet_queue_insert(buffet_t *self, proximo)
 }
