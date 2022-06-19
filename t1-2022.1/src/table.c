@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include "table.h"
 
+#include <stdio.h>
+//TODO remover include stdio.h
 
 /* --------------------------------------------------------- */
 /* ATENÇÃO: Não será necessário modificar as funções abaixo! */
@@ -8,6 +10,7 @@
 
 table_t *table_init(int number_of_tables, int seats_per_table)
 {
+    printf("\n-------------------TABLE_INIT FUNCIONANDO-------------------\n");
     table_t *new_tables = malloc(sizeof(table_t) * number_of_tables);
     for (int i = 0; i < number_of_tables; i++)
     {

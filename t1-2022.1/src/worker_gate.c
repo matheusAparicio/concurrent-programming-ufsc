@@ -4,9 +4,10 @@
 #include "globals.h"
 #include "config.h"
 
-student_t proximo;  // Variável que guarda o estudante que irá passar a catraca
+student_t* proximo;  // Variável que guarda o estudante que irá passar a catraca
 
-bool catraca = TRUE;
+//vai agir como um bool
+int catraca = 1;
 
 void worker_gate_look_queue()
 {
@@ -14,9 +15,9 @@ void worker_gate_look_queue()
     
     // * Segura a thread enquanto não houver espaço nos buffets?
 
-    buffets_ref
+    //buffets_ref
 
-    while (catraca = TRUE) {
+    while (catraca == TRUE) {
 
     }
     
@@ -29,7 +30,8 @@ void worker_gate_look_queue()
 void worker_gate_remove_student()
 {
     /* Insira aqui sua lógica */
-        proximo = queue_remove(students_queue);     // Remove estudante da fila
+        proximo = queue_remove(globals_get_queue());     // Remove estudante da fila
+        printf("AAAAAAAAAAAAAAAA");
 }
 
 void worker_gate_look_buffet()
@@ -42,8 +44,11 @@ void worker_gate_look_buffet()
 
 void *worker_gate_run(void *arg)
 {
+    printf("\n-------------------WORKER_GATE_RUN FUNCIONANDO-------------------\n");
+    
     int all_students_entered;
     int number_students;
+
 
     number_students = *((int *)arg);
     all_students_entered = number_students > 0 ? FALSE : TRUE;
@@ -61,6 +66,7 @@ void *worker_gate_run(void *arg)
 
 void worker_gate_init(worker_gate_t *self)
 {
+    printf("\n-------------------WORKER_GATE_INIT FUNCIONANDO-------------------\n");
     int number_students = globals_get_students();
     pthread_create(&self->thread, NULL, worker_gate_run, &number_students);
 }

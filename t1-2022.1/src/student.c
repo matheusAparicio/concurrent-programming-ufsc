@@ -12,6 +12,7 @@
 
 void* student_run(void *arg)
 {
+    printf("\n-------------------STUDENT_RUN FUNCIONANDO-------------------\n");
     student_t *self = (student_t*) arg;
     table_t *tables  = globals_get_table();
 
@@ -44,6 +45,7 @@ void student_leave(student_t *self, table_t *table)
 
 student_t *student_init()
 {
+    printf("\n-------------------STUDENT_INIT FUNCIONANDO-------------------\n");
     student_t *student = malloc(sizeof(student_t));
     student->_id = rand() % 1000;
     student->_buffet_position = -1;

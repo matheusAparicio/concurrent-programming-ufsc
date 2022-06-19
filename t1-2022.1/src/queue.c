@@ -11,6 +11,7 @@
 
 queue_t *queue_init()
 {
+    //printf("\n-------------------QUEUE_INIT FUNCIONANDO-------------------\n");
     queue_t *q = malloc(sizeof(queue_t));
     q->_first = NULL;
     q->_last = NULL;

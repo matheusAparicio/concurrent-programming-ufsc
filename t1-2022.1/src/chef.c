@@ -8,6 +8,8 @@ void *chef_run()
     /* Insira sua lógica aqui */
     // A cada aluno que se serve no buffet verifica se têm alguma bacia vazia
 
+    printf("\n-------------------CHEF_RUN FUNCIONANDO-------------------\n");
+
     while (TRUE)
     {
         //if chef_check_food(){
@@ -38,6 +40,7 @@ void chef_check_food()
 
 void chef_init(chef_t *self)
 {
+    printf("\n-------------------CHEF_INIT FUNCIONANDO-------------------\n");
     pthread_create(&self->thread, NULL, chef_run, NULL);
 }
 

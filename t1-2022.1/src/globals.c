@@ -57,5 +57,7 @@ buffet_t *globals_get_buffets()
  */
 void globals_finalize()
 {
+    free(students_queue);
     free(table);
+    free(buffets_ref);
 }

@@ -5,8 +5,11 @@
 
 void *buffet_run(void *arg)
 {   
+    printf("\n-------------------BUFFET_RUN FUNCIONANDO-------------------\n");
+    
     int all_students_entered = FALSE;
     buffet_t *self = (buffet_t*) arg;
+
     
     /*  O buffet funciona enquanto houver alunos na fila externa. */
     while (all_students_entered == FALSE)
@@ -23,6 +26,9 @@ void *buffet_run(void *arg)
 
 void buffet_init(buffet_t *self, int number_of_buffets)
 {
+
+    printf("\n-------------------BUFFET_INIT FUNCIONANDO-------------------\n");
+
     int i = 0, j = 0;
     for (i = 0; i < number_of_buffets; i++)
     {
