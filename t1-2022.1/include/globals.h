@@ -5,6 +5,74 @@
 #include "table.h"
 #include "buffet.h"
 
+
+
+// Implementados pelo aluno ----------
+
+
+/**
+ * @brief
+ * 
+ */
+extern void globals_set_students_inside(int number);
+
+/**
+ * @brief
+ * 
+ * @return int 
+ */
+
+extern int globals_get_students_inside();
+
+
+/**
+ * @brief
+ * 
+ */
+extern void globals_set_all_students_entered(int bool);
+
+/**
+ * @brief
+ * 
+ * @return int 
+ */
+
+extern int globals_get_all_students_entered();
+
+
+/**
+ * @brief
+ * 
+ */
+extern void globals_set_table_quantity(int number);
+
+/**
+ * @brief
+ * 
+ * @return int 
+ */
+
+extern int globals_get_table_quantity();
+
+
+
+/**
+ * @brief
+ * 
+ */
+extern void globals_set_seats(int number);
+
+/**
+ * @brief
+ * 
+ * @return int 
+ */
+
+extern int globals_get_seats();
+
+// Fim dos implementados pelo aluno ----------
+
+
 /**
  * @brief Inicia uma fila (de modo global)
  * 

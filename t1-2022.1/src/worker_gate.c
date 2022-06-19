@@ -6,38 +6,27 @@
 
 student_t* proximo;  // Variável que guarda o estudante que irá passar a catraca
 
-//vai agir como um bool
-int catraca = 1;
-
 void worker_gate_look_queue()
 {
-    /* Insira aqui sua lógica */
-    
-    // * Segura a thread enquanto não houver espaço nos buffets?
-
-    //buffets_ref
-
-    while (catraca == TRUE) {
-
-    }
-    
+    globals_set_all_students_entered(globals_get_students() > 0 ? FALSE : TRUE); // Verifica se ainda existem 
+                                                                                 // estudantes na fila de entrada
     printf("\nRestam %d estudantes na fila\n", globals_get_students());
-    
-    
-
 }
 
 void worker_gate_remove_student()
 {
     /* Insira aqui sua lógica */
-        proximo = queue_remove(globals_get_queue());     // Remove estudante da fila
-        printf("AAAAAAAAAAAAAAAA");
+        proximo = queue_remove(globals_get_queue());    // Remove estudante da fila
+        globals_set_students(globals_get_students() - 1);   // Diminui o número de estudantes na fila
+        globals_set_students_inside(globals_get_students_inside() + 1); // Aumenta o número de estudantes dentro do RU
+        printf("\nEstudante entrou no RU\n");
 }
 
 void worker_gate_look_buffet()
 {
     /* Insira aqui sua lógica */
     // * Observa se existem buffets com espaços livres
+    // * Segura a thread enquanto não houver espaço nos buffets?
 
 
 }
@@ -46,19 +35,20 @@ void *worker_gate_run(void *arg)
 {
     printf("\n-------------------WORKER_GATE_RUN FUNCIONANDO-------------------\n");
     
-    int all_students_entered;
-    int number_students;
+    int all_students_entered = globals_get_all_students_entered();
+    int number_students = *((int *)arg);
 
-
-    number_students = *((int *)arg);
-    all_students_entered = number_students > 0 ? FALSE : TRUE;
+    printf("all_students_entered = %d\nnumber_students = %d\n", all_students_entered, number_students);
 
     while (all_students_entered == FALSE)
     {
+        printf("worker_gate_run está em loop");
         worker_gate_look_queue(); // * Pega id estudante
         worker_gate_look_buffet(); // * Observa pra qual buffet mandar
         worker_gate_remove_student();
         msleep(5000); /* Pode retirar este sleep quando implementar a solução! */
+        all_students_entered = globals_get_all_students_entered();
+        number_students = globals_get_students();
     }
 
     pthread_exit(NULL);
