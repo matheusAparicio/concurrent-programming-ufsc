@@ -27,21 +27,36 @@ void worker_gate_look_buffet()
     /* Insira aqui sua lógica */
     // * Observa se existem buffets com espaços livres
     // * Segura a thread enquanto não houver espaço nos buffets?
-    int pode_passar = 0;
     int buffet_livre_index = 0;
     int buffet_livre_lado = 0; // 0 = esquerda e 1 = direita
 
     // Loop que passa por todos os buffets
     for (int i = 0; i < globals_get_buffet_number(); i++) {
-        printf("\nOlhou o buffet de id %d\n", (globals_get_buffets() + i)->_id);
+
+        printf("\nOlhando para o buffet de id %d\n", (globals_get_buffets() + i)->_id);
+
+        if (globals_sum_all_elements((globals_get_buffets() + i)->queue_left, 5) < 5) { // verifica se a soma de pessoas na fila esquerda é menor que 5
+            buffet_livre_index = i;
+            buffet_livre_lado = 0;
+            globals_set_worker_gate_can_pass(TRUE);
+        } else if (globals_sum_all_elements((globals_get_buffets() + i)->queue_right, 5) < 5) { // verifica se a soma de pessoas na fila direita é menor que 5
+            buffet_livre_index = i;
+            buffet_livre_lado = 1;
+            globals_set_worker_gate_can_pass(TRUE);
+        }
         // passa por todos os buffets do primeiro ao último, da esquerda pra direita, verificando o primeiro que estiver livre
         // caso encontre algum livre, pode_passar fica true e buffet_livre_index e buffet_livre_lado sao atualizados
     }
 
-    if (pode_passar) {
+    if (globals_get_worker_gate_can_pass()) {
+        printf("\n%d\n", buffet_livre_index);
+        printf("\n%d\n", buffet_livre_lado);
         //worker_gate_insert_queue_buffet
     } else {
-
+        while (globals_get_worker_gate_can_pass() == FALSE) {
+            msleep(500);
+            worker_gate_look_buffet()
+        }
     }
 
 

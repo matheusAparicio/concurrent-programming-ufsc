@@ -14,6 +14,30 @@
  * @brief
  * 
  */
+extern void globals_set_worker_gate_can_pass(int bool);
+
+/**
+ * @brief
+ * 
+ * @return int 
+ */
+
+extern int globals_get_worker_gate_can_pass();
+
+
+/**
+ * @brief
+ * 
+ * @return int 
+ */
+
+extern int globals_sum_all_elements(int array[], int n);
+
+
+/**
+ * @brief
+ * 
+ */
 extern void globals_set_buffet_number(int number);
 
 /**

@@ -13,9 +13,33 @@ int seats_per_table = 0;
 int all_students_entered = 0;
 int students_inside_number = 0;
 int buffet_number = 0;
+int worker_gate_can_pass = 0;
 
 // Implementados pelo aluno ----------
 
+
+// Quantidade de buffets
+void globals_set_worker_gate_can_pass(int bool)
+{
+    worker_gate_can_pass = bool;
+}
+
+int globals_get_worker_gate_can_pass()
+{
+    return worker_gate_can_pass;
+}
+
+
+// Retorna a soma de todos os elementos da array passada
+int globals_sum_all_elements(int array[], int n)
+{
+    int sum = 0;
+ 
+    for (int i = 0; i < n; i++)
+    sum += array[i];
+ 
+    return sum;
+}
 
 // Quantidade de buffets
 void globals_set_buffet_number(int number)
