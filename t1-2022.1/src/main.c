@@ -41,7 +41,7 @@ config_t parse (int argc, char **argv)
                 exit(1);
         }
     }
-
+    globals_set_buffet_number(config.buffets);
     return config;
 }
 

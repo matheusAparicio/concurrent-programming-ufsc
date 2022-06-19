@@ -12,10 +12,24 @@ int number_of_tables = 0;
 int seats_per_table = 0;
 int all_students_entered = 0;
 int students_inside_number = 0;
+int buffet_number = 0;
 
 // Implementados pelo aluno ----------
 
 
+// Quantidade de buffets
+void globals_set_buffet_number(int number)
+{
+    buffet_number = number;
+}
+
+int globals_get_buffet_number()
+{
+    return buffet_number;
+}
+
+
+// Quantidade de alunos dentro do RU
 void globals_set_students_inside(int number)
 {
     students_inside_number = number;
@@ -26,7 +40,7 @@ int globals_get_students_inside()
     return students_inside_number;
 }
 
-
+// Bool para saber se todos os alunos entraram no RU
 void globals_set_all_students_entered(int bool)
 {
     all_students_entered = bool;
@@ -37,7 +51,7 @@ int globals_get_all_students_entered()
     return all_students_entered;
 }
 
-
+// Quantidade de mesas no RU
 void globals_set_table_quantity(int number)
 {
     number_of_tables = number;
@@ -48,6 +62,7 @@ int globals_get_table_quantity()
     return number_of_tables;
 }
 
+// Quantidade de assentos por mesa
 void globals_set_seats(int number)
 {
     seats_per_table = number;

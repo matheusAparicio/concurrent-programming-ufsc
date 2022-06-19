@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "buffet.h"
 #include "config.h"
+#include "globals.h"
 
 
 void *buffet_run(void *arg)
@@ -17,7 +18,7 @@ void *buffet_run(void *arg)
         /* Cada buffet possui: Arroz, Feijão, Acompanhamento, Proteína e Salada */
         /* Máximo de porções por bacia (40 unidades). */
     //    _log_buffet(self);  // * provoca os prints na tela
-
+    //    all_students_entered = globals_get_all_students_entered();
     //    msleep(5000); /* Pode retirar este sleep quando implementar a solução! */
     //}
 

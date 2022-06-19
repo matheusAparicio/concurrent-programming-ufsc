@@ -19,7 +19,7 @@ void worker_gate_remove_student()
         proximo = queue_remove(globals_get_queue());    // Remove estudante da fila
         globals_set_students(globals_get_students() - 1);   // Diminui o número de estudantes na fila
         globals_set_students_inside(globals_get_students_inside() + 1); // Aumenta o número de estudantes dentro do RU
-        printf("\nEstudante entrou no RU\n");
+        if (globals_get_students() + 1 > 0) {printf("\nEstudante entrou no RU\n"); }
 }
 
 void worker_gate_look_buffet()
@@ -28,6 +28,11 @@ void worker_gate_look_buffet()
     // * Observa se existem buffets com espaços livres
     // * Segura a thread enquanto não houver espaço nos buffets?
 
+    // Loop que passa por todos os buffets
+    for (int i = 0; i < globals_get_buffet_number(); i++) {
+        printf("\nOlhou o buffet de id %d\n", (globals_get_buffets() + i)->_id);
+    }
+    //worker_gate_insert_queue_buffet
 
 }
 
@@ -49,8 +54,11 @@ void *worker_gate_run(void *arg)
         msleep(5000); /* Pode retirar este sleep quando implementar a solução! */
         all_students_entered = globals_get_all_students_entered();
         number_students = globals_get_students();
+        printf("\núltima etapa do loop de worker_gate_run\n");
     }
 
+    printf("worker_gate_run saiu do loop");
+    free(proximo);
     pthread_exit(NULL);
 }
 

@@ -14,6 +14,21 @@
  * @brief
  * 
  */
+extern void globals_set_buffet_number(int number);
+
+/**
+ * @brief
+ * 
+ * @return int 
+ */
+
+extern int globals_get_buffet_number();
+
+
+/**
+ * @brief
+ * 
+ */
 extern void globals_set_students_inside(int number);
 
 /**
