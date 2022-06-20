@@ -27,6 +27,9 @@ void* student_run(void *arg)
 void student_seat(student_t *self, table_t *table)
 {
     /* Insira sua lógica aqui */
+    if (table->_empty_seats > 0) {
+        table->_empty_seats--;
+    }
 }
 
 void student_serve(student_t *self)
