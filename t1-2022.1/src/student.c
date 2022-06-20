@@ -32,11 +32,22 @@ void student_seat(student_t *self, table_t *table)
 void student_serve(student_t *self)
 {
     /* Insira sua lógica aqui */
+    if (self->_buffet_position < 4) {
+        if (self->_wishes[self->_buffet_position] == 1) {
+            (globals_get_buffets() + self->_id_buffet)->_meal[self->_buffet_position]--;
+        }
+        self->_buffet_position++;
+    } else {
+        //student_seat();
+    }
 }
 
 void student_leave(student_t *self, table_t *table)
 {
     /* Insira sua lógica aqui */
+    msleep(1000);
+    table->_empty_seats++;
+    student_finalize(self);
 }
 
 /* --------------------------------------------------------- */
