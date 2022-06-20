@@ -2,6 +2,7 @@
 
 #include "chef.h"
 #include "config.h"
+#include "buffet.h"
 #include "globals.h"
 
 void *chef_run()
@@ -21,9 +22,10 @@ void *chef_run()
 }
 
 
-void chef_put_food()
+void chef_put_food(buffet_t *self, int index)
 {
     /* Insira sua lógica aqui */
+    self->_meal[index] = 40;
 }
 void chef_check_food()
 {
@@ -39,7 +41,7 @@ void chef_check_food()
         // Olhar todas as comidas do buffet atual
         for (int j = 0; j < 5; j++) {
             if ( (globals_get_buffets() + i)->_meal[j] <= 0 ) {
-                (globals_get_buffets() + i)->_meal[j] = 40;
+                chef_put_food((globals_get_buffets() + i), j);
             }
         }
 
