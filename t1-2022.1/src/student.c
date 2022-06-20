@@ -34,7 +34,7 @@ void student_serve(student_t *self)
     /* Insira sua lógica aqui */
     if (self->_buffet_position < 4) {
         if (self->_wishes[self->_buffet_position] == 1) {
-            (globals_get_buffets() + self->_id_buffet)->_meal[self->_buffet_position]--;
+            (globals_get_buffets() + self->_id_buffet)->_meal[self->_buffet_position]--; // remove a comida que o estudante está pegando no momento se ele desejar ela
         }
         self->_buffet_position++;
     } else {
