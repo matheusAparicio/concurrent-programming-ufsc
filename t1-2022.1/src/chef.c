@@ -2,6 +2,7 @@
 
 #include "chef.h"
 #include "config.h"
+#include "globals.h"
 
 void *chef_run()
 {
@@ -11,12 +12,9 @@ void *chef_run()
     printf("\n-------------------CHEF_RUN FUNCIONANDO-------------------\n");
 
     while (TRUE)
-    {
-        //if chef_check_food(){
-        //    chef_put_food();
-        //}
-        
-        msleep(5000); /* Pode retirar este sleep quando implementar a solução! */
+    {   
+        chef_check_food();
+        msleep(1000); /* Pode retirar este sleep quando implementar a solução! */
     }
     
     pthread_exit(NULL);
@@ -32,6 +30,20 @@ void chef_check_food()
     /* Insira sua lógica aqui */
     // Verifica as bacias dos i Buffets
     //buffets[i]._meal[j]
+
+    // Loop que passa por todos os buffets
+    for (int i = 0; i < globals_get_buffet_number(); i++) {
+
+        printf("\nO chef está olhando para o buffet de id %d\n", (globals_get_buffets() + i)->_id);
+
+        // Olhar todas as comidas do buffet atual
+        for (int j = 0; j < 5; j++) {
+            if ( (globals_get_buffets() + i)->_meal[j] <= 0 ) {
+                (globals_get_buffets() + i)->_meal[j] = 40;
+            }
+        }
+
+    }
 }
 
 /* --------------------------------------------------------- */
