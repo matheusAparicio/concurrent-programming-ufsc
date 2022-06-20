@@ -114,7 +114,20 @@ void worker_gate_finalize(worker_gate_t *self)
 void worker_gate_insert_queue_buffet(student_t *student)
 {
     /* Insira aqui sua lógica */
-
+        if (proximo == NULL) {
+            printf("\nNão foi possível inserir na fila ''proximo''");
+        } else {
+            if (buffet_livre_lado == 0) {
+                printf("\n proximo->left_or_right = 'L'; \n");
+                proximo->left_or_right = 'L';
+            }
+            else if (buffet_livre_lado == 1) {
+                printf("\n proximo->left_or_right = 'R'; \n");
+                proximo->left_or_right = 'R';
+            } else {
+            printf("Erro! Estudante não possuí lado definido");
+                }
+            }
     //buffet_queue_insert(buffet_t *self, student_t *student)
     //! buffet_queue_insert(buffet_t *self, proximo)
 }
