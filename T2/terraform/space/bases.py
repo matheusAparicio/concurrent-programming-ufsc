@@ -50,15 +50,24 @@ class SpaceBase(Thread):
                 print("Invalid rocket name")
 
 
-    def refuel_oil():
+    def refuel_oil(self):
         mines = globals.get_mines_ref() #busca dict de minas
         oil_mine = mines['oil_earth'] #seleciona mina de petróleo
-        oil_mine.run() #executa comportamento da mina -> possivelmente tem que mudar
+        if(self.fuel < self.constraints[1] and oil_mine.unities >= 125): #se houver capacidade e combustivel na mina
+            #adicionar mutex aqui para somente uma base acessar a mina
+            oil_mine.unities = oil_mine.unities - 125 #retira combustivel da mina
+            self.fuel = self.fuel + 125 #adiciona combustivel na base
+            print(f"Base {self.name} está abasteceu e tem agora {self.fuel} unidades de combustível.")
 
-    def refuel_uranium():
+    def refuel_uranium(self):
         mines = globals.get_mines_ref() #busca dict de minas
         uranium_mine = mines['uranium_earth'] #seleciona mina de urano
-        uranium_mine.run() #executa comportamento da mina -> possivelmente tem que mudar
+        if(self.uranium < self.constraints[0] and uranium_mine.unities >= 50): #houver capacidade e urano na mina...
+            #adicionar mutex aqui para somente uma base acessar a mina
+            uranium_mine.unities = uranium_mine.unities - 50 #retira urano da mina
+            self.uranium = self.uranium + 50 #adiciona urano na base
+            print(f"Base {self.name} está abasteceu e tem agora {self.uranium} unidades de urano.")
+
 
     def run(self):
         globals.acquire_print()
@@ -69,5 +78,6 @@ class SpaceBase(Thread):
             pass
 
         while(True):
-
-            pass
+            self.refuel_oil()
+            self.refuel_uranium()
+            
