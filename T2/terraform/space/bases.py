@@ -8,7 +8,7 @@ class SpaceBase(Thread):
     ################################################
     # O CONSTRUTOR DA CLASSE NÃO PODE SER ALTERADO #
     ################################################
-    def __init__(self, name, uranium, fuel, rockets):
+    def __init__(self, name, fuel, uranium, rockets):
         Thread.__init__(self)
         self.name = name
         self.uranium = 0
@@ -51,10 +51,14 @@ class SpaceBase(Thread):
 
 
     def refuel_oil():
-        pass
+        mines = globals.get_mines_ref() #busca dict de minas
+        oil_mine = mines['oil_earth'] #seleciona mina de petróleo
+        oil_mine.run() #executa comportamento da mina -> possivelmente tem que mudar
 
     def refuel_uranium():
-        pass   
+        mines = globals.get_mines_ref() #busca dict de minas
+        uranium_mine = mines['uranium_earth'] #seleciona mina de urano
+        uranium_mine.run() #executa comportamento da mina -> possivelmente tem que mudar
 
     def run(self):
         globals.acquire_print()
