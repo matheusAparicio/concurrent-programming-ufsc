@@ -14,6 +14,24 @@ planets = {}
 bases = {}
 mines = {}
 simulation_time = None
+moon_need_resources = True #variável destinada a saber se a lua precisa de recursos
+lions_alive = 0
+
+def set_lions_alive(n):
+    global lions_alive
+    lions_alive = n
+
+def get_lions_alive():
+    global lions_alive
+    return lions_alive
+
+def set_moon_need_resources(do_need): #func que altera o estado da necessidade de recurson na lua
+    global moon_need_resources
+    moon_need_resources = do_need
+
+def get_moon_need_resources(): #func que retorna se a lua precisa de recursos
+    global moon_need_resources
+    return moon_need_resources
 
 def acquire_print():
     global mutex_print
