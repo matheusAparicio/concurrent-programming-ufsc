@@ -16,6 +16,7 @@ mines = {}
 simulation_time = None
 moon_need_resources = True #variável destinada a saber se a lua precisa de recursos
 lions_alive = 0
+mutex_lion = Lock()
 
 def set_lions_alive(n):
     global lions_alive
@@ -32,6 +33,14 @@ def set_moon_need_resources(do_need): #func que altera o estado da necessidade d
 def get_moon_need_resources(): #func que retorna se a lua precisa de recursos
     global moon_need_resources
     return moon_need_resources
+
+def acquire_lion(): #adquire mutex que protege a variável lion
+    global mutex_lion
+    mutex_lion.acquire()
+
+def release_lion():#libera mutex que protege a variável lion
+    global mutex_lion
+    mutex_lion.release()
 
 def acquire_print():
     global mutex_print
