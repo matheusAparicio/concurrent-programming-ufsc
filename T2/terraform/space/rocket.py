@@ -1,4 +1,4 @@
-from random import randrange, random
+from random import *
 from time import sleep
 import globals
 
@@ -17,13 +17,11 @@ class Rocket:
             
 
     def nuke(self, planet): # Permitida a alteração
-        self.damage()
-        print(f"[EXPLOSION] - The {self.name} ROCKET reached the planet {planet.name} on North Pole")
-        print(f"[EXPLOSION] - The {self.name} ROCKET reached the planet {planet.name} on South Pole")
-        pass
+        targetPole = choice(["north", "south"])
+        planet.nuke_detected(self.damage(), targetPole)
+        print(f"[EXPLOSION] - The {self.name} ROCKET reached the planet {planet.name} on {targetPole} Pole")
     
     def voyage(self, planet): # Permitida a alteração (com ressalvas)
-
         # Essa chamada de código (do_we_have_a_problem e simulation_time_voyage) não pode ser retirada.
         # Você pode inserir código antes ou depois dela e deve
         # usar essa função.

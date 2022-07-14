@@ -2,7 +2,8 @@ from logging import exception
 import globals
 from threading import Thread
 from space.rocket import Rocket
-from random import choice, random
+from random import *
+#from random import choice, random
 from time import sleep
 
 class SpaceBase(Thread):
@@ -37,6 +38,7 @@ class SpaceBase(Thread):
                         if self.fuel > 100:
                             self.fuel -= 100
                             #fazer lógica do foguete indo até o planeta
+                rocket.voyage(choice(list(globals.get_planets_ref().values())))
             case 'FALCON':
                 match self.name:
                     case 'ALCANTRA':
@@ -51,6 +53,7 @@ class SpaceBase(Thread):
                         if self.fuel > 120:
                             self.fuel -= 120
                             #fazer lógica do foguete indo até o planeta
+                rocket.voyage(choice(list(globals.get_planets_ref().values())))
             case 'LION':
                 match self.name:
                     case 'ALCANTRA':
@@ -65,6 +68,7 @@ class SpaceBase(Thread):
                             rocket.voyage_to_moon()
             case _:
                 print("Invalid rocket name")
+
 
 
     def refuel_oil(self):

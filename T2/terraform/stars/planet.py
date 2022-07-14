@@ -16,6 +16,7 @@ class Planet(Thread):
         self.name = name
 
     def nuke_detected(self, damagePercentage, pole="north"):
+        globals.acquirePlanetBombed()
         if (self.terraform > 0):
             before_percentage = self.terraform
             while(before_percentage == self.terraform):
@@ -40,6 +41,7 @@ class Planet(Thread):
                     self.timerSouth = 25
                 case _:
                     print(f"Erro! Polo atingido do corpo celeste {threading.currentThread()} não foi identificado.")
+        globals.releasePlanetBombed()
 
     def print_planet_info(self):
         print(f"🪐 - [{self.name}] → {self.terraform}% UNINHABITABLE")
@@ -68,5 +70,5 @@ class Planet(Thread):
             globals.releaseNukeTimerDecrease()
             
             #TODO retirar isso aqui depois
-            if (random.randint(0, 50) == 5):
-                self.nuke_detected(5, random.choice(["north", "south"]))
+            #if (random.randint(0, 50) == 5):
+            #    self.nuke_detected(5, random.choice(["north", "south"]))
