@@ -39,6 +39,7 @@ class Rocket:
         lua.fuel += self.fuel_cargo #abastece lua com combustivel
         print(f'Foguete {self.name} com ID {self.id} abasteceu a Lua')
         globals.set_lions_alive(globals.get_lions_alive - 1) #libera vaga pra criação de outro lion
+        print(f'Base {lua.name} foi abastecida e tem agora URANO: {lua.uranium} COMBUSTÌVEL: {lua.fuel}')
 
 
     ####################################################
