@@ -1,5 +1,6 @@
 from random import randrange, random
 from time import sleep
+import globals
 
 
 class Rocket:
@@ -30,6 +31,14 @@ class Rocket:
         failure =  self.do_we_have_a_problem()
         self.nuke(planet)
 
+    def voyage_to_moon(self):
+        print(f'Foguete {self.name} com ID {self.id} indo pra Lua')
+        sleep(0.011) #representa 4 dias de viagem
+        lua = globals.get_bases_ref()['moon'] #referencia pra lua
+        lua.uranium += self.uranium_cargo #abastece lua com urano
+        lua.fuel += self.fuel_cargo #abastece lua com combustivel
+        print(f'Foguete {self.name} com ID {self.id} abasteceu a Lua')
+        globals.set_lions_alive(globals.get_lions_alive - 1) #libera vaga pra criação de outro lion
 
 
     ####################################################
