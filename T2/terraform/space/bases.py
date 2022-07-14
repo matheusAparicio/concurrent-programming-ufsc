@@ -85,6 +85,10 @@ class SpaceBase(Thread):
             self.uranium = self.uranium + 35 #adiciona urano na base
             print(f"Base {self.name} abasteceu e tem agora: URANO:{self.uranium}.")
     
+    def refuel_from_rocket(self, rocket):
+        self.uranium += rocket.uranium_cargo
+        self.fuel += rocket.fuel_cargo
+
     def create_rocket(self):
         rocket = None
         if((self.name != 'MOON') and globals.get_moon_need_resources() and (globals.get_lions_alive() < 2)): #se a lua precisa de recursos e tem menos de 2 lions prontos
@@ -152,10 +156,10 @@ class SpaceBase(Thread):
                 if self.fuel < self.constraints[1] or self.uranium < self.constraints[0]:
                     if lions_alive < 2:
                         globals.set_moon_need_resources(True) #a lua precisará de recursos
-                        print("Lua requisita recursos!")
+                        print(f"{self.name} requisita recursos!")
                 else:
                     globals.set_moon_need_resources(False)
-                    print("Lua não precisa mais de recursos!")
+                    print(f"{self.name} não precisa mais de recursos!")
                     if(self.rockets < self.constraints[2]): #se tem capacidade pros foguetes
                         rocket = self.create_rocket() #cria foguete
                         if rocket != None:
@@ -174,4 +178,5 @@ class SpaceBase(Thread):
                 '''fazer exclusão mútua???'''
                 self.base_rocket_launch(launched) #lança primeiro foguete adicionado à lista
                 self.rockets -= 1 #reduz número de foguetes na base
+                print(f'Base {self.name} lançou {launched.name}:{launched.id}')
             
