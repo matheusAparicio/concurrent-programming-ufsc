@@ -10,12 +10,21 @@ from threading import Lock
 
 release_system = False
 mutex_print = Lock()
+mutexNukeTimerDecrease = Lock()
 planets = {}
 bases = {}
 mines = {}
 simulation_time = None
 moon_need_resources = True #variável destinada a saber se a lua precisa de recursos
 lions_alive = 0
+
+def acquireNukeTimerDecrease():
+    global mutexNukeTimerDecrease
+    mutexNukeTimerDecrease.acquire()
+
+def releaseNukeTimerDecrease():
+    global mutexNukeTimerDecrease
+    mutexNukeTimerDecrease.release()
 
 def set_lions_alive(n):
     global lions_alive

@@ -19,10 +19,10 @@ class Planet(Thread):
         if (self.terraform > 0):
             before_percentage = self.terraform
             while(before_percentage == self.terraform):
-                self.terraform -= damagePercentage # fazer o planeta receber dano após bombardeado
+                self.terraform -= damagePercentage # Fazer o planeta receber dano após bombardeado.
             print(f"[NUKE DETECTION] - The planet {self.name} was bombed. {self.terraform}% UNHABITABLE\n")
 
-        #Se o planeta já tiver sido atingido e o contador ainda não tiver sido zerado, o planeta explode.
+        #Quando o planeta é atingido, é feita a verificação se ele foi atingido recentemente e em quais polos para saber se o planeta explodirá ou não.
         if (self.timerNorth > 0 and self.timerSouth > 0):
             print(f"KABUM! O corpo celeste {threading.currentThread()} foi destruído pois muitas bombas o atingiram simultaneamente.\n")
             self.alive = False
@@ -54,21 +54,19 @@ class Planet(Thread):
         while(globals.get_release_system() == False):
             pass
 
-        #TODO fazer o nuke_detected ser chamado pela propria bomba
-
         self.timerNorth = 0
         self.timerSouth = 0
         self.alive = True
 
         while (self.alive):
-            print(f"-------- Loop {threading.currentThread()}--------\n")
-
             #Fazer o contador diminuir durante a execução da thread do planeta
+            globals.acquireNukeTimerDecrease()
             if (self.timerNorth > 0):
                 self.timerNorth -= 1
             if (self.timerSouth > 0):
                 self.timerSouth -= 1
+            globals.releaseNukeTimerDecrease()
             
             #TODO retirar isso aqui depois
-            if (random.randint(0, 100) == 5):
+            if (random.randint(0, 50) == 5):
                 self.nuke_detected(5, random.choice(["north", "south"]))
