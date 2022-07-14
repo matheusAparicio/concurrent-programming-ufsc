@@ -87,16 +87,17 @@ class SpaceBase(Thread):
     
     def create_rocket(self):
         rocket = None
-        lions_alive = globals.get_lions_alive()
-        if(globals.get_moon_need_resources() and (self.name != 'MOON') and (lions_alive < 2)): #se a lua precisa de recursos e tem menos de 2 lions prontos
+        if((self.name != 'MOON') and globals.get_moon_need_resources() and (globals.get_lions_alive() < 2)): #se a lua precisa de recursos e tem menos de 2 lions prontos
             if(self.uranium >= 75 and self.fuel >=120): #se tem recursos suficientes para transporte
                 rocket = Rocket('LION') #cria foguete lion
                 self.rockets += 1 #aumenta foguetes na base
+                globals.acquire_lion() #protege a integridade da qtd de lions
                 globals.set_lions_alive(globals.get_lions_alive() + 1) #indica que existe mais um foguete lion para nao ter excedentes
+                globals.release_lion() #libera a variável pra uso
                 self.uranium -= 75
                 self.fuel -= 120
                 rocket.uranium_cargo += 75
-                rocket.fuel_cargo +=120
+                rocket.fuel_cargo += 120
                 print(f'Base {self.name} criou um foguete {rocket.name}')
         else:
             if(self.uranium > 35): #se tem urano suficiente pra criar ogiva
@@ -116,17 +117,18 @@ class SpaceBase(Thread):
         self.print_space_base_info()
         globals.release_print()
         rockets = []
-        lions_alive = globals.get_lions_alive()
 
         while(globals.get_release_system() == False):
             pass
 
         while(True):
+            lions_alive = globals.get_lions_alive()
             if(self.name == 'MOON'): # A lua é a unica base que se comporta diferente para receber recursos
                 #se o armazenamento nao está cheio e tem menos de dois foguetes de carga prontos...
-                if((self.fuel < self.constraints[1] or self.uranium <self.constraints[0]) and lions_alive < 2):
-                    globals.set_moon_need_resources(True) #a lua precisará de recursos
-                    print("Lua requisita recursos!")
+                if self.fuel < self.constraints[1] or self.uranium < self.constraints[0]:
+                    if lions_alive < 2:
+                        globals.set_moon_need_resources(True) #a lua precisará de recursos
+                        print("Lua requisita recursos!")
                 else:
                     globals.set_moon_need_resources(False)
                     print("Lua não precisa mais de recursos!")
