@@ -15,7 +15,7 @@ class Planet(Thread):
         self.terraform = terraform
         self.name = name
 
-    def nuke_detected(self, damagePercentage):
+    def nuke_detected(self, damagePercentage, pole="north"):
         if (self.terraform > 0):
             before_percentage = self.terraform
             while(before_percentage == self.terraform):
@@ -23,11 +23,23 @@ class Planet(Thread):
             print(f"[NUKE DETECTION] - The planet {self.name} was bombed. {self.terraform}% UNHABITABLE\n")
 
         #Se o planeta já tiver sido atingido e o contador ainda não tiver sido zerado, o planeta explode.
-        if (self.timer > 0):
+        if (self.timerNorth > 0 and self.timerSouth > 0):
             print(f"KABUM! O corpo celeste {threading.currentThread()} foi destruído pois muitas bombas o atingiram simultaneamente.\n")
             self.alive = False
+        elif (self.timerNorth > 0 and pole == "north"):
+            print(f"KABUM! O corpo celeste {threading.currentThread()} foi destruído pois 2 bombas atingiram o polo norte simultaneamente.\n")
+            self.alive = False
+        elif (self.timerSouth > 0 and pole == "south"):
+            print(f"KABUM! O corpo celeste {threading.currentThread()} foi destruído pois 2 bombas atingiram o polo sul simultaneamente.\n")
+            self.alive = False
         else:
-            self.timer = 25
+            match pole:
+                case "north":
+                    self.timerNorth = 25
+                case "south":
+                    self.timerSouth = 25
+                case _:
+                    print(f"Erro! Polo atingido do corpo celeste {threading.currentThread()} não foi identificado.")
 
     def print_planet_info(self):
         print(f"🪐 - [{self.name}] → {self.terraform}% UNINHABITABLE")
@@ -44,19 +56,19 @@ class Planet(Thread):
 
         #TODO fazer o nuke_detected ser chamado pela propria bomba
 
-        self.timer = 0
+        self.timerNorth = 0
+        self.timerSouth = 0
         self.alive = True
 
         while (self.alive):
             print(f"-------- Loop {threading.currentThread()}--------\n")
 
             #Fazer o contador diminuir durante a execução da thread do planeta
-            if (self.timer > 0):
-                self.timer -= 1
+            if (self.timerNorth > 0):
+                self.timerNorth -= 1
+            if (self.timerSouth > 0):
+                self.timerSouth -= 1
             
             #TODO retirar isso aqui depois
-            if (random.randint(0, 30) == 5):
-                self.nuke_detected(5)
-
-        #while(True):
-        #    self.nuke_detected(5)
+            if (random.randint(0, 100) == 5):
+                self.nuke_detected(5, random.choice(["north", "south"]))

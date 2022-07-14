@@ -88,7 +88,9 @@ class SpaceBase(Thread):
         pass #fazer lógica
     
     def create_rocket(self):
-        if(globals.moon_need_resources and (self.name != 'MOON') and (globals.get_lions_alive < 3)): #se a lua precisa de recursos e tem menos de 3 lions prontos
+        #TODO ver o que fazer aqui
+        rocket = Rocket('')
+        if(globals.moon_need_resources and (self.name != 'MOON') and (globals.get_lions_alive() < 3)): #se a lua precisa de recursos e tem menos de 3 lions prontos
             if(self.uranium >= 75 and self.fuel >=120): #se tem recursos suficientes para transporte
                 rocket = Rocket('LION') #cria foguete lion
                 self.rockets += 1 #aumenta foguetes na base
