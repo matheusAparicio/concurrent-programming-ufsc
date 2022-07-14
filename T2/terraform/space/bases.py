@@ -56,12 +56,12 @@ class SpaceBase(Thread):
                     case 'ALCANTRA':
                         if self.fuel > 100:
                             self.fuel -= 100
-                            #fazer lógica do foguete indo até a lua
+                            #lógica do foguete indo até a lua
                             rocket.voyage_to_moon
                     case _:
                         if self.fuel > 115:
                             self.fuel -= 115
-                            #fazer lógica do foguete indo até a lua
+                            #lógica do foguete indo até a lua
                             rocket.voyage_to_moon()
             case _:
                 print("Invalid rocket name")
@@ -100,7 +100,7 @@ class SpaceBase(Thread):
                 rocket.fuel_cargo += 120
                 print(f'Base {self.name} criou um foguete {rocket.name}')
         else:
-            if(self.uranium > 35): #se tem urano suficiente pra criar ogiva
+            if(self.uranium >= 35): #se tem urano suficiente pra criar ogiva
                 if(random() < 0.5): #cria foguetes explosivos aleatóriamente
                     rocket = Rocket('DRAGON')
                 else:
@@ -117,6 +117,30 @@ class SpaceBase(Thread):
         self.print_space_base_info()
         globals.release_print()
         rockets = []
+        cost_per_dragon = 0
+        cost_per_falcon = 0
+        cost_per_lion = 0
+        match self.name:
+            case 'MOON':
+                cost_per_dragon = 50
+                cost_per_falcon = 90
+            case 'ALCANTRA':
+                cost_per_dragon = 70
+                cost_per_falcon = 100
+                cost_per_lion = 100
+            case 'MOSCOW':
+                cost_per_dragon = 100
+                cost_per_falcon = 120
+                cost_per_lion = 115
+            case 'CANAVERAL CAPE':
+                cost_per_dragon = 100
+                cost_per_falcon = 120
+                cost_per_lion = 115
+        cost_per_rocket = {
+            'DRAGON': cost_per_dragon,
+            'FALCON': cost_per_falcon,
+            'LION': cost_per_lion
+        }
 
         while(globals.get_release_system() == False):
             pass
@@ -136,8 +160,7 @@ class SpaceBase(Thread):
                         rocket = self.create_rocket() #cria foguete
                         if rocket != None:
                             rockets.append(rocket) #adiciona foguete na lista de foguetes da base
-
-            else:
+            else: #Comportamento de qualquer outra base
                 if(self.fuel < self.constraints[1]):#colocando essa condição aqui garante que no longo prazo se nao for necessário não haverá custo com a execução da função
                     self.refuel_oil() #abastece combustível
                 if(self.uranium < self.constraints[0]):#colocando essa condição aqui garante que no longo prazo se nao for necessário não haverá custo com a execução da função
@@ -146,9 +169,9 @@ class SpaceBase(Thread):
                     rocket = self.create_rocket() #cria foguete
                     if rocket != None:
                         rockets.append(rocket) #adiciona foguete na lista de foguetes da base
-                if(len(rockets) > 0): #se tem foguete pra lançar
-                    launched = rockets.pop(0) 
-                    '''fazer exclusão mútua'''
-                    self.base_rocket_launch(launched) #lança primeiro foguete adicionado à lista
-                    self.rockets -= 1 #reduz número de foguetes na base
+            if(len(rockets) > 0 and self.fuel >= cost_per_rocket[rockets[0].name]): #se tem foguete pra lançar e tiver combustivel pro lançamento
+                launched = rockets.pop(0) 
+                '''fazer exclusão mútua???'''
+                self.base_rocket_launch(launched) #lança primeiro foguete adicionado à lista
+                self.rockets -= 1 #reduz número de foguetes na base
             
