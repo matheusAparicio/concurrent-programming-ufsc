@@ -20,8 +20,8 @@ class SpaceBase(Thread):
     def print_space_base_info(self):
         print(f"🔭 - [{self.name}] → 🪨  {self.uranium}/{self.constraints[0]} URANIUM  ⛽ {self.fuel}/{self.constraints[1]}  🚀 {self.rockets}/{self.constraints[2]}")
     
-    def base_rocket_launch(self, rocket_name):
-        match rocket_name:
+    def base_rocket_launch(self, rocket):
+        match rocket.name:
             case 'DRAGON':
                 match self.name:
                     case 'ALCANTRA':
@@ -36,17 +36,6 @@ class SpaceBase(Thread):
                         if self.fuel > 100:
                             self.fuel -= 100
                             #fazer lógica do foguete indo até o planeta
-
-            ########### método do bruno referente ao comportamento acima     
-                # if self.uranium > 35 and self.fuel > 50:
-                #     self.uranium = self.uranium - 35
-                #     if self.name == 'ALCANTARA':
-                #         self.fuel = self.fuel - 70
-                #     elif self.name == 'MOON':
-                #         self.fuel = self.fuel - 50
-                #     else:
-                #         self.fuel = self.fuel - 100
-            ###########
             case 'FALCON':
                 match self.name:
                     case 'ALCANTRA':
@@ -61,35 +50,18 @@ class SpaceBase(Thread):
                         if self.fuel > 120:
                             self.fuel -= 120
                             #fazer lógica do foguete indo até o planeta
-
-            ########### método do bruno referente ao comportamento acima
-                # if self.uranium > 35 and self.fuel > 90:
-                #     self.uranium = self.uranium - 35
-                #     if self.name == 'ALCANTARA':
-                #         self.fuel = self.fuel - 100
-                #     elif self.name == 'MOON':
-                #         self.fuel = self.fuel - 90
-                #     else:
-                #         self.fuel = self.fuel - 120
             case 'LION':
                 match self.name:
                     case 'ALCANTRA':
                         if self.fuel > 100:
                             self.fuel -= 100
-                            #fazer lógica do foguete indo até o planeta
+                            #fazer lógica do foguete indo até a lua
+                            rocket.voyage_to_moon
                     case _:
                         if self.fuel > 115:
                             self.fuel -= 115
-                            #fazer lógica do foguete indo até o planeta
-                            sleep(0.011) #representa 4 dias de viagem
-
-            ########## método do bruno referente ao comportamento acima
-                # if self.uranium > 35 and self.fuel > 100:
-                #     self.uranium = self.uranium - 35
-                #     if self.name == 'ALCANTARA':
-                #         self.fuel = self.fuel - 100
-                #     else:
-                #         self.fuel = self.fuel - 115
+                            #fazer lógica do foguete indo até a lua
+                            rocket.voyage_to_moon()
             case _:
                 print("Invalid rocket name")
 
