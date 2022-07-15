@@ -16,7 +16,7 @@ planets = {}
 bases = {}
 mines = {}
 simulation_time = None
-moon_need_resources = True #variável destinada a saber se a lua precisa de recursos
+moon_need_resources = False #variável destinada a saber se a lua precisa de recursos
 lions_alive = 0
 mutex_lion = Lock()
 

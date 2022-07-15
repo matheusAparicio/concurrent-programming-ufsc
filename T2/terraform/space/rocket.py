@@ -18,7 +18,7 @@ class Rocket:
 
     def nuke(self, planet): # Permitida a alteração
         targetPole = choice(["north", "south"])
-        planet.nuke_detected(self.damage(), targetPole)
+        planet.nuke_detected(self.damage()*10, targetPole)
         print(f"[EXPLOSION] - The {self.name} ROCKET reached the planet {planet.name} on {targetPole} Pole")
     
     def voyage(self, planet): # Permitida a alteração (com ressalvas)
@@ -33,11 +33,10 @@ class Rocket:
         print(f'Foguete {self.name} com ID {self.id} indo pra Lua')
         sleep(0.011) #representa 4 dias de viagem
         lua = globals.get_bases_ref()['moon'] #referencia pra lua
-        # lua.uranium += self.uranium_cargo #abastece lua com urano
-        # lua.fuel += self.fuel_cargo #abastece lua com combustivel
         globals.acquire_lion() #protege a integridade da qtd de lions
         globals.set_lions_alive(globals.get_lions_alive() - 1) #libera vaga pra criação de outro lion
-        lua.refuel_from_rocket(self)
+        lua.uranium += self.uranium_cargo #abastece lua com urano
+        lua.fuel += self.fuel_cargo #abastece lua com combustivel
         print(f'Foguete {self.name} com ID {self.id} abasteceu a Lua')
         globals.release_lion() #libera a variável pra uso
         print(f'Base {lua.name} foi abastecida e tem agora URANO: {lua.uranium} COMBUSTÌVEL: {lua.fuel}')
