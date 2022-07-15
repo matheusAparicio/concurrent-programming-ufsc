@@ -27,44 +27,44 @@ class SpaceBase(Thread):
             case 'DRAGON':
                 match self.name:
                     case 'ALCANTRA':
-                        if self.fuel > 70:
+                        if self.fuel >= 70:
                             self.fuel -= 70
-                            #fazer lógica do foguete indo até o planeta
+                            #fazer lógica do foguete indo até o planeta OK
                     case 'MOON':
-                        if self.fuel > 50:
+                        if self.fuel >= 50:
                             self.fuel -= 50
-                            #fazer lógica do foguete indo até o planeta
+                            #fazer lógica do foguete indo até o planeta OK
                     case _:
-                        if self.fuel > 100:
+                        if self.fuel >= 100:
                             self.fuel -= 100
-                            #fazer lógica do foguete indo até o planeta
+                            #fazer lógica do foguete indo até o planeta OK
                 rocket.voyage(choice(list(globals.get_planets_ref().values())))
             case 'FALCON':
                 match self.name:
                     case 'ALCANTRA':
-                        if self.fuel > 100:
+                        if self.fuel >= 100:
                             self.fuel -= 100
-                            #fazer lógica do foguete indo até o planeta
+                            #fazer lógica do foguete indo até o planeta OK
                     case 'MOON':
-                        if self.fuel > 90:
+                        if self.fuel >= 90:
                             self.fuel -= 90
-                            #fazer lógica do foguete indo até o planeta
+                            #fazer lógica do foguete indo até o planeta OK
                     case _:
-                        if self.fuel > 120:
+                        if self.fuel >= 120:
                             self.fuel -= 120
-                            #fazer lógica do foguete indo até o planeta
+                            #fazer lógica do foguete indo até o planeta OK
                 rocket.voyage(choice(list(globals.get_planets_ref().values())))
             case 'LION':
                 match self.name:
                     case 'ALCANTRA':
-                        if self.fuel > 100:
+                        if self.fuel >= 100:
                             self.fuel -= 100
-                            #lógica do foguete indo até a lua
-                            rocket.voyage_to_moon
+                            #lógica do foguete indo até a lua OK
+                            rocket.voyage_to_moon()
                     case _:
-                        if self.fuel > 115:
+                        if self.fuel >= 115:
                             self.fuel -= 115
-                            #lógica do foguete indo até a lua
+                            #lógica do foguete indo até a lua OK
                             rocket.voyage_to_moon()
             case _:
                 print("Invalid rocket name")
@@ -93,7 +93,7 @@ class SpaceBase(Thread):
         rocket = None
         if((self.name != 'MOON') and globals.get_moon_need_resources() and (globals.get_lions_alive() < 2)): #se a lua precisa de recursos e tem menos de 2 lions prontos
             if(self.uranium >= 75 and self.fuel >=120): #se tem recursos suficientes para transporte
-                lua = globals.get_bases_ref()['moon']
+                lua = globals.get_bases_ref()['moon'] #referencia a lua pra monitorar capacidades
                 rocket = Rocket('LION') #cria foguete lion
                 self.rockets += 1 #aumenta foguetes na base
                 globals.acquire_lion() #protege a integridade da qtd de lions
@@ -161,7 +161,7 @@ class SpaceBase(Thread):
                 print(f'Base {self.name} lançou {launched.name}:{launched.id}')
 
             #ABASTECE E CRIA FOGUETES
-            lions_alive = globals.get_lions_alive()
+            lions_alive = globals.get_lions_alive() 
             if(self.name == 'MOON'): # A lua é a unica base que se comporta diferente para receber recursos
                 #se um dos armazenamentos nao está cheio e tem menos de dois foguetes de carga prontos
                 if (self.fuel < self.constraints[1] or self.uranium < self.constraints[0]) and lions_alive < 2:
@@ -171,7 +171,7 @@ class SpaceBase(Thread):
                 elif(self.uranium >= self.constraints[0] and self.fuel >= self.constraints[1]):
                     globals.set_moon_need_resources(False) #a lua para de requisitar recursos
                     print(f"{self.name} não precisa mais de recursos!")
-                if(self.rockets < self.constraints[2]): #se tem capacidade pros foguetes
+                if(self.rockets < self.constraints[2]): #se tem capacidade pra armazenar foguetes
                     rocket = self.create_rocket() #cria foguete (a verificação de disponibilidade de recursos é feita na func)
                     if rocket != None: #se o retorno foi um foguete...
                         rockets.append(rocket) #adiciona foguete na lista de foguetes da base
