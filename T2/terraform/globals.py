@@ -21,6 +21,7 @@ lions_alive = 0
 mutex_lion = Lock()
 
 
+# Quando um planeta for atingido por uma bomba, garante que a nuke_detected do planeta seja executada completamente.
 def acquirePlanetBombed():
     global mutexPlanetBombed
     mutexPlanetBombed.acquire()
@@ -29,6 +30,7 @@ def releasePlanetBombed():
     global mutexPlanetBombed
     mutexPlanetBombed.release()
 
+# Garante que os timers dos polos norte e sul sejam decrementados juntos dos planetas.
 def acquireNukeTimerDecrease():
     global mutexNukeTimerDecrease
     mutexNukeTimerDecrease.acquire()
