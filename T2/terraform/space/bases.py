@@ -38,7 +38,16 @@ class SpaceBase(Thread):
                         if self.fuel >= 100:
                             self.fuel -= 100
                             #fazer lógica do foguete indo até o planeta OK
-                rocket.voyage(choice(list(globals.get_planets_ref().values())))
+
+                # Escolhe aleatoriamente o destino do foguete
+                destination = choice(list(globals.get_planets_ref().values()))
+
+                # Caso o planeta tenha sido atingido recentemente por 2 bombas o foguete aguarda para ser lançado.
+                while (destination.timerNorth > 0 and destination.timerSouth > 0):
+                    sleep(.1)
+                else:
+                    rocket.voyage(destination)
+
             case 'FALCON':
                 match self.name:
                     case 'ALCANTRA':
@@ -53,7 +62,16 @@ class SpaceBase(Thread):
                         if self.fuel >= 120:
                             self.fuel -= 120
                             #fazer lógica do foguete indo até o planeta OK
-                rocket.voyage(choice(list(globals.get_planets_ref().values())))
+
+                # Escolhe aleatoriamente o destino do foguete
+                destination = choice(list(globals.get_planets_ref().values()))
+
+                # Caso o planeta tenha sido atingido recentemente por 2 bombas o foguete aguarda para ser lançado.
+                while (destination.timerNorth > 0 and destination.timerSouth > 0):
+                    sleep(.1)
+                else:
+                    rocket.voyage(destination)
+
             case 'LION':
                 match self.name:
                     case 'ALCANTRA':
