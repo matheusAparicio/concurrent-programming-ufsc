@@ -20,6 +20,15 @@ moon_need_resources = False #variável destinada a saber se a lua precisa de rec
 lions_alive = 0
 mutex_lion = Lock()
 
+'''
+mutexRocketLaunches = {
+    'alcantara': alcantara,
+    'canaveral_cape': canaveral_cape,
+    'moscow': moscow,
+    'moon': moon
+}
+'''
+
 
 # Quando um planeta for atingido por uma bomba, garante que a nuke_detected do planeta seja executada completamente.
 def acquirePlanetBombed():

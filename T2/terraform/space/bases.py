@@ -23,57 +23,8 @@ class SpaceBase(Thread):
         print(f"🔭 - [{self.name}] → 🪨  {self.uranium}/{self.constraints[0]} URANIUM  ⛽ {self.fuel}/{self.constraints[1]}  🚀 {self.rockets}/{self.constraints[2]}")
     
     def base_rocket_launch(self, rocket):
-        match rocket.name:
-            case 'DRAGON':
-                match self.name:
-                    case 'ALCANTRA':
-                        if self.fuel >= 70:
-                            self.fuel -= 70
-                            #fazer lógica do foguete indo até o planeta OK
-                    case 'MOON':
-                        if self.fuel >= 50:
-                            self.fuel -= 50
-                            #fazer lógica do foguete indo até o planeta OK
-                    case _:
-                        if self.fuel >= 100:
-                            self.fuel -= 100
-                            #fazer lógica do foguete indo até o planeta OK
-
-                # Escolhe aleatoriamente o destino do foguete
-                destination = choice(list(globals.get_planets_ref().values()))
-
-                # Caso o planeta tenha sido atingido recentemente por 2 bombas o foguete aguarda para ser lançado.
-                while (destination.timerNorth > 0 and destination.timerSouth > 0):
-                    sleep(.1)
-                else:
-                    rocket.voyage(destination)
-
-            case 'FALCON':
-                match self.name:
-                    case 'ALCANTRA':
-                        if self.fuel >= 100:
-                            self.fuel -= 100
-                            #fazer lógica do foguete indo até o planeta OK
-                    case 'MOON':
-                        if self.fuel >= 90:
-                            self.fuel -= 90
-                            #fazer lógica do foguete indo até o planeta OK
-                    case _:
-                        if self.fuel >= 120:
-                            self.fuel -= 120
-                            #fazer lógica do foguete indo até o planeta OK
-
-                # Escolhe aleatoriamente o destino do foguete
-                destination = choice(list(globals.get_planets_ref().values()))
-
-                # Caso o planeta tenha sido atingido recentemente por 2 bombas o foguete aguarda para ser lançado.
-                while (destination.timerNorth > 0 and destination.timerSouth > 0):
-                    sleep(.1)
-                else:
-                    rocket.voyage(destination)
-
-            case 'LION':
-                match self.name:
+        if (rocket.name == "LION"):
+            match self.name:
                     case 'ALCANTRA':
                         if self.fuel >= 100:
                             self.fuel -= 100
@@ -84,10 +35,47 @@ class SpaceBase(Thread):
                             self.fuel -= 115
                             #lógica do foguete indo até a lua OK
                             rocket.voyage_to_moon()
-            case _:
-                print("Invalid rocket name")
+        else:
+            match rocket.name:
+                case 'DRAGON':
+                    match self.name:
+                        case 'ALCANTRA':
+                            if self.fuel >= 70:
+                                self.fuel -= 70
+                                #fazer lógica do foguete indo até o planeta OK
+                        case 'MOON':
+                            if self.fuel >= 50:
+                                self.fuel -= 50
+                                #fazer lógica do foguete indo até o planeta OK
+                        case _:
+                            if self.fuel >= 100:
+                                self.fuel -= 100
+                                #fazer lógica do foguete indo até o planeta OK
+                case 'FALCON':
+                    match self.name:
+                        case 'ALCANTRA':
+                            if self.fuel >= 100:
+                                self.fuel -= 100
+                                #fazer lógica do foguete indo até o planeta OK
+                        case 'MOON':
+                            if self.fuel >= 90:
+                                self.fuel -= 90
+                                #fazer lógica do foguete indo até o planeta OK
+                        case _:
+                            if self.fuel >= 120:
+                                self.fuel -= 120
+                                #fazer lógica do foguete indo até o planeta OK
+                case _:
+                    print("Invalid rocket name")
 
+            # Escolhe aleatoriamente o destino do foguete
+            destination = choice(list(globals.get_planets_ref().values()))
 
+            # Caso o planeta tenha sido atingido recentemente por 2 bombas o foguete aguarda para ser lançado.
+            while (destination.timerNorth > 0 and destination.timerSouth > 0):
+                sleep(.1)
+            else:
+                rocket.voyage(destination)
 
     def refuel_oil(self):
         mines = globals.get_mines_ref() #busca dict de minas
