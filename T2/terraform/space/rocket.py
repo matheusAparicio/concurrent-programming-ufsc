@@ -38,6 +38,7 @@ class Rocket:
         lua = globals.get_bases_ref()['moon'] #referencia pra lua
         globals.acquire_lion() #protege a integridade da qtd de lions
         globals.set_lions_alive(globals.get_lions_alive() - 1) #libera vaga pra criação de outro lion
+        print("Lions alive: ",globals.get_lions_alive())
         lua.uranium += self.uranium_cargo #abastece lua com urano
         lua.fuel += self.fuel_cargo #abastece lua com combustivel
         print(f'Foguete {self.name} com ID {self.id} abasteceu a Lua')

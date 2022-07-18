@@ -15,7 +15,7 @@ class Planet(Thread):
         self.terraform = terraform
         self.name = name
 
-    def nuke_detected(self, damagePercentage, pole="north"):
+    def nuke_detected(self, damagePercentage, pole):
         globals.acquirePlanetBombed()
         if (self.terraform > 0):
             before_percentage = self.terraform
@@ -25,13 +25,13 @@ class Planet(Thread):
 
         #Quando o planeta é atingido, é feita a verificação se ele foi atingido recentemente e em quais polos para saber se o planeta explodirá ou não.
         if (self.timerNorth > 0 and self.timerSouth > 0):
-            print(f"KABUM! O corpo celeste {threading.currentThread()} foi destruído pois muitas bombas o atingiram simultaneamente.\n")
+            print(f"KABUM! O corpo celeste {self.name} foi destruído pois muitas bombas o atingiram simultaneamente.\n")
             self.alive = False
         elif (self.timerNorth > 0 and pole == "north"):
-            print(f"KABUM! O corpo celeste {threading.currentThread()} foi destruído pois 2 bombas atingiram o polo norte simultaneamente.\n")
+            print(f"KABUM! O corpo celeste {self.name} foi destruído pois 2 bombas atingiram o polo norte simultaneamente.\n")
             self.alive = False
         elif (self.timerSouth > 0 and pole == "south"):
-            print(f"KABUM! O corpo celeste {threading.currentThread()} foi destruído pois 2 bombas atingiram o polo sul simultaneamente.\n")
+            print(f"KABUM! O corpo celeste {self.name} foi destruído pois 2 bombas atingiram o polo sul simultaneamente.\n")
             self.alive = False
         else:
             match pole:
@@ -40,22 +40,15 @@ class Planet(Thread):
                 case "south":
                     self.timerSouth = 25
                 case _:
-                    print(f"Erro! Polo atingido do corpo celeste {threading.currentThread()} não foi identificado.")
+                    print(f"Erro! Polo atingido do corpo celeste {self.name} não foi identificado.")
+        self.is_habitable()
         globals.releasePlanetBombed()
 
-        # Teste.
+    def is_habitable(self):
         if self.terraform <= 0:
-            print(f"{self.name} terraformado com sucesso!")
+            print(f"@@@@@@@@@@@@@@@@@@@@@@@@@@@ {self.name} terraformado com SUCESSO! @@@@@@@@@@@@@@@@@@@@@@@@@@@")
             self.alive = False
-            '''
-            if (globals.getUnhabitablePlanets() > 0):
-                globals.setUnhabitablePlanets(globals.getUnhabitablePlanets() - 1)
-            else:
-                print("Todos os planetas foram terraformados! Programa sendo finalizado...")
-                a = input("Aperte enter para finalizar o programa. ")
-                os._exit(1)
-            '''
-        # globals.notifyHabitable()
+        
 
     def print_planet_info(self):
         print(f"🪐 - [{self.name}] → {self.terraform}% UNINHABITABLE")

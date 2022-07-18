@@ -16,24 +16,16 @@ planets = {}
 bases = {}
 mines = {}
 simulation_time = None
+
 moon_need_resources = False #variável destinada a saber se a lua precisa de recursos
 lions_alive = 0
 mutex_lion = Lock()
+lock_oil = Lock()
+lock_uranium = Lock()
 
 conditionHabitable = Condition()
 unhabitablePlanets = 3
 
-
-'''
-mutexRocketLaunches = {
-    'alcantara': alcantara,
-    'canaveral_cape': canaveral_cape,
-    'moscow': moscow,
-    'moon': moon
-}
-'''
-
-# Teste ----------------------------
 
 # Funções do Condition criado para controlar quando um planeta se torna habitável. (Ainda não usado corretamente)
 def waitHabitable():
@@ -104,6 +96,22 @@ def acquire_lion(): #adquire mutex que protege a variável lion
 def release_lion():#libera mutex que protege a variável lion
     global mutex_lion
     mutex_lion.release()
+
+def acquire_oil(): #adquire mutex que protege acesso à mina de petróleo
+    global mutex_lion
+    lock_oil.acquire()
+
+def release_oil():#libera mutex que protege acesso à mina de petróleo
+    global mutex_lion
+    lock_oil.release()
+
+def acquire_uranium(): #adquire mutex que protege acesso à mina de uranio
+    global mutex_lion
+    lock_uranium.acquire()
+
+def release_uranium():#libera mutex que protege acesso à mina de uranio
+    global mutex_lion
+    lock_uranium.release()
 
 def acquire_print():
     global mutex_print

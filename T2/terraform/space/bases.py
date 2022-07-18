@@ -70,27 +70,8 @@ class SpaceBase(Thread):
                 case _:
                     print("Invalid rocket name")
 
-            # globals.acquireHabitable()
-            # globals.waitHabitable()
-            
             # Escolhe aleatoriamente o destino do foguete. Caso o destino escolhido já tenha sido terraformado, outro destino é escolhido.
-            destinationName = self.checkPlanetAlive()#choice(list(globals.get_planets_ref().keys()))
-            '''
-            if (globals.get_planets_ref()[destinationName].alive == False):
-                globals.set_planets_ref(self.removePlanet(destinationName)) # Se o planeta sorteado já tiver sido terraformado, ele é removido do dicionário de planetas.
-                print(f"AQUI TEM TODOS OS PLANETAS DE TAMANHO {len(globals.get_planets_ref())} {globals.get_planets_ref()}") # Print para debug.
-                # Se o dicionário tiver com algum planeta, outro planeta é escolhido. Caso contrário, o programa encerra.
-                if (len(globals.get_planets_ref()) > 0):
-                    destinationName = choice(list(globals.get_planets_ref().keys()))
-                else:
-                    #TODO corrigir a finalização do programa
-                    print("Todos os planetas foram terraformados! Programa sendo finalizado...")
-                    a = input("Aperte enter para finalizar o programa. ")
-                    os._exit(1)
-            '''
-            # globals.releaseHabitable()
-
-                
+            destinationName = self.checkPlanetAlive()
 
             destination = globals.get_planets_ref()[destinationName]
             targetPole = choice(["north", "south"])
@@ -114,14 +95,12 @@ class SpaceBase(Thread):
         planetName = choice(list(globals.get_planets_ref().keys())) # Pega um planeta aleatório.
         if (globals.get_planets_ref()[planetName].alive == False):
                 globals.set_planets_ref(self.removePlanet(planetName)) # Se o planeta sorteado já tiver sido terraformado, ele é removido do dicionário de planetas.
-                print(f"AQUI TEM TODOS OS PLANETAS DE TAMANHO {len(globals.get_planets_ref())} {globals.get_planets_ref()}") # Print para debug.
                 # Se o dicionário tiver com algum planeta, outro planeta é escolhido. Caso contrário, o programa encerra.
                 if (len(globals.get_planets_ref()) > 0):
                     planetName = self.checkPlanetAlive() # Chamada recursiva
                 else:
                     #TODO corrigir a finalização do programa
-                    print("Todos os planetas foram terraformados! Programa sendo finalizado...")
-                    a = input("Aperte enter para finalizar o programa. ")
+                    print("###################### Todos os planetas foram terraformados! Programa sendo finalizado... ######################")
                     os._exit(1)
         return planetName
 
@@ -152,6 +131,7 @@ class SpaceBase(Thread):
                 self.rockets += 1 #aumenta foguetes na base
                 globals.acquire_lion() #protege a integridade da qtd de lions
                 globals.set_lions_alive(globals.get_lions_alive() + 1) #indica que existe mais um foguete lion para nao ter excedentes
+                print("Lions alive: ",globals.get_lions_alive())
                 globals.release_lion() #libera a variável pra uso
                 if lua.uranium < lua.constraints[0]: #garante que só vai mandar uranio se precisar
                     self.uranium -= 75
@@ -180,7 +160,6 @@ class SpaceBase(Thread):
         cost_per_dragon = 0
         cost_per_falcon = 0
         cost_per_lion = 0
-        lock = Lock()
         match self.name:
             case 'MOON':
                 cost_per_dragon = 50
@@ -231,9 +210,13 @@ class SpaceBase(Thread):
                         rockets.append(rocket) #adiciona foguete na lista de foguetes da base
             else: #Comportamento de qualquer outra base
                 if(self.fuel < self.constraints[1]):#colocando essa condição aqui garante que no longo prazo se nao for necessário não haverá custo com a execução da função
+                    globals.acquire_oil() #trava acesso à mina
                     self.refuel_oil() #abastece combustível
+                    globals.release_oil() #libera acesso da mina
                 if(self.uranium < self.constraints[0]):#colocando essa condição aqui garante que no longo prazo se nao for necessário não haverá custo com a execução da função
+                    globals.acquire_uranium() #trava acesso à mina
                     self.refuel_uranium() #abastece urano
+                    globals.release_uranium() #libera acesso da mina
                 if self.rockets < self.constraints[2]: #se tem capacidade pros foguetes...
                     rocket = self.create_rocket() #cria foguete
                     if rocket != None:
