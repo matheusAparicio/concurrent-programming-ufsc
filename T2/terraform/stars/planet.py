@@ -44,7 +44,6 @@ class Planet(Thread):
         globals.releasePlanetBombed()
 
         # Teste.
-        globals.acquireHabitable()
         if self.terraform <= 0:
             print(f"{self.name} terraformado com sucesso!")
             self.alive = False
@@ -56,7 +55,7 @@ class Planet(Thread):
                 a = input("Aperte enter para finalizar o programa. ")
                 os._exit(1)
             '''
-        globals.releaseHabitable()
+        # globals.notifyHabitable()
 
     def print_planet_info(self):
         print(f"🪐 - [{self.name}] → {self.terraform}% UNINHABITABLE")

@@ -70,28 +70,60 @@ class SpaceBase(Thread):
                 case _:
                     print("Invalid rocket name")
 
-            if (len(globals.get_planets_ref()) > 0):
-                # Escolhe aleatoriamente o destino do foguete. Caso o destino escolhido já tenha sido terraformado, outro destino é escolhido.
-                destinationName = choice(list(globals.get_planets_ref().keys()))
-
-                #TODO corrigir isso - planetas sendo "terraformados" repetidamente
-                if (globals.get_planets_ref()[destinationName].alive == False):
-                    del globals.get_planets_ref()[destinationName]
-                    print(globals.get_planets_ref())
+            # globals.acquireHabitable()
+            # globals.waitHabitable()
+            
+            # Escolhe aleatoriamente o destino do foguete. Caso o destino escolhido já tenha sido terraformado, outro destino é escolhido.
+            destinationName = self.checkPlanetAlive()#choice(list(globals.get_planets_ref().keys()))
+            '''
+            if (globals.get_planets_ref()[destinationName].alive == False):
+                globals.set_planets_ref(self.removePlanet(destinationName)) # Se o planeta sorteado já tiver sido terraformado, ele é removido do dicionário de planetas.
+                print(f"AQUI TEM TODOS OS PLANETAS DE TAMANHO {len(globals.get_planets_ref())} {globals.get_planets_ref()}") # Print para debug.
+                # Se o dicionário tiver com algum planeta, outro planeta é escolhido. Caso contrário, o programa encerra.
+                if (len(globals.get_planets_ref()) > 0):
                     destinationName = choice(list(globals.get_planets_ref().keys()))
-
-                destination = globals.get_planets_ref()[destinationName]
-                targetPole = choice(["north", "south"])
-
-                # Caso o planeta tenha sido atingido recentemente por 2 bombas o foguete aguarda para ser lançado.
-                while ((destination.timerNorth > 0 and destination.timerSouth > 0) or (targetPole == "north" and destination.timerNorth > 0) or (targetPole == "south" and destination.timerSouth > 0)):
-                    sleep(.1)
                 else:
-                    rocket.voyage(destination, targetPole)
+                    #TODO corrigir a finalização do programa
+                    print("Todos os planetas foram terraformados! Programa sendo finalizado...")
+                    a = input("Aperte enter para finalizar o programa. ")
+                    os._exit(1)
+            '''
+            # globals.releaseHabitable()
+
+                
+
+            destination = globals.get_planets_ref()[destinationName]
+            targetPole = choice(["north", "south"])
+
+            # Caso o planeta tenha sido atingido recentemente por 2 bombas o foguete aguarda para ser lançado.
+            while ((destination.timerNorth > 0 and destination.timerSouth > 0) or (targetPole == "north" and destination.timerNorth > 0) or (targetPole == "south" and destination.timerSouth > 0)):
+                sleep(.1)
             else:
-                print("Todos os planetas foram terraformados! Programa sendo finalizado...")
-                a = input("Aperte enter para finalizar o programa. ")
-                os._exit(1)
+                rocket.voyage(destination, targetPole)
+
+    # Função que retorna todos os planetas existentes com exceção do planeta especificado.
+    def removePlanet(self, planetName):
+        planets = {}
+        for i in globals.get_planets_ref().keys():
+            if (i != planetName):
+                planets[i] = globals.get_planets_ref()[i]
+        return planets
+
+    # Função responsável por retorna um planeta que ainda esteja inabitável. Caso todos estejam habitáveis, finaliza o programa.
+    def checkPlanetAlive(self):
+        planetName = choice(list(globals.get_planets_ref().keys())) # Pega um planeta aleatório.
+        if (globals.get_planets_ref()[planetName].alive == False):
+                globals.set_planets_ref(self.removePlanet(planetName)) # Se o planeta sorteado já tiver sido terraformado, ele é removido do dicionário de planetas.
+                print(f"AQUI TEM TODOS OS PLANETAS DE TAMANHO {len(globals.get_planets_ref())} {globals.get_planets_ref()}") # Print para debug.
+                # Se o dicionário tiver com algum planeta, outro planeta é escolhido. Caso contrário, o programa encerra.
+                if (len(globals.get_planets_ref()) > 0):
+                    planetName = self.checkPlanetAlive() # Chamada recursiva
+                else:
+                    #TODO corrigir a finalização do programa
+                    print("Todos os planetas foram terraformados! Programa sendo finalizado...")
+                    a = input("Aperte enter para finalizar o programa. ")
+                    os._exit(1)
+        return planetName
 
     def refuel_oil(self):
         mines = globals.get_mines_ref() #busca dict de minas

@@ -1,4 +1,4 @@
-from threading import Lock
+from threading import Lock, Condition
 
 #  A total alteração deste arquivo é permitida.
 #  Lembre-se de que algumas variáveis globais são setadas no arquivo simulation.py
@@ -20,7 +20,7 @@ moon_need_resources = False #variável destinada a saber se a lua precisa de rec
 lions_alive = 0
 mutex_lion = Lock()
 
-mutexHabitable = Lock()
+conditionHabitable = Condition()
 unhabitablePlanets = 3
 
 
@@ -34,14 +34,25 @@ mutexRocketLaunches = {
 '''
 
 # Teste ----------------------------
+
+# Funções do Condition criado para controlar quando um planeta se torna habitável. (Ainda não usado corretamente)
+def waitHabitable():
+    global conditionHabitable
+    conditionHabitable.wait()
+
+def notifyHabitable():
+    global conditionHabitable
+    conditionHabitable.notify()
+
 def acquireHabitable():
-    global mutexHabitable
-    mutexHabitable.acquire()
+    global conditionHabitable
+    conditionHabitable.acquire()
 
 def releaseHabitable():
-    global mutexHabitable
-    mutexHabitable.release()
+    global conditionHabitable
+    conditionHabitable.release()
 
+# Globais contendo o número de planetas não habitáveis. (Por enquanto não é usada)
 def setUnhabitablePlanets(n):
     global unhabitablePlanets
     unhabitablePlanets = n
