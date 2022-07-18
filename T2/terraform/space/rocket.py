@@ -16,12 +16,11 @@ class Rocket:
             self.uranium_cargo = 0
             
 
-    def nuke(self, planet): # Permitida a alteração
-        targetPole = choice(["north", "south"])
-        planet.nuke_detected(self.damage()*10, targetPole)
-        print(f"[EXPLOSION] - The {self.name} ROCKET reached the planet {planet.name} on {targetPole} Pole")
+    def nuke(self, planet, pole): # Permitida a alteração
+        planet.nuke_detected(self.damage()*10, pole)
+        print(f"[EXPLOSION] - The {self.name} ROCKET reached the planet {planet.name} on {pole} Pole")
     
-    def voyage(self, planet): # Permitida a alteração (com ressalvas)
+    def voyage(self, planet, pole): # Permitida a alteração (com ressalvas)
         # Essa chamada de código (do_we_have_a_problem e simulation_time_voyage) não pode ser retirada.
         # Você pode inserir código antes ou depois dela e deve
         # usar essa função.
@@ -31,7 +30,7 @@ class Rocket:
         if (failure):
             pass
         else:
-            self.nuke(planet)
+            self.nuke(planet, pole)
 
     def voyage_to_moon(self):
         print(f'Foguete {self.name} com ID {self.id} indo pra Lua')

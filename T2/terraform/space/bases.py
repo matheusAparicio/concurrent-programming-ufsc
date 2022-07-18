@@ -6,6 +6,8 @@ from random import *
 #from random import choice, random
 from time import sleep
 
+import os
+
 class SpaceBase(Thread):
 
     ################################################
@@ -68,14 +70,28 @@ class SpaceBase(Thread):
                 case _:
                     print("Invalid rocket name")
 
-            # Escolhe aleatoriamente o destino do foguete
-            destination = choice(list(globals.get_planets_ref().values()))
+            if (len(globals.get_planets_ref()) > 0):
+                # Escolhe aleatoriamente o destino do foguete. Caso o destino escolhido já tenha sido terraformado, outro destino é escolhido.
+                destinationName = choice(list(globals.get_planets_ref().keys()))
 
-            # Caso o planeta tenha sido atingido recentemente por 2 bombas o foguete aguarda para ser lançado.
-            while (destination.timerNorth > 0 and destination.timerSouth > 0):
-                sleep(.1)
+                #TODO corrigir isso - planetas sendo "terraformados" repetidamente
+                if (globals.get_planets_ref()[destinationName].alive == False):
+                    del globals.get_planets_ref()[destinationName]
+                    print(globals.get_planets_ref())
+                    destinationName = choice(list(globals.get_planets_ref().keys()))
+
+                destination = globals.get_planets_ref()[destinationName]
+                targetPole = choice(["north", "south"])
+
+                # Caso o planeta tenha sido atingido recentemente por 2 bombas o foguete aguarda para ser lançado.
+                while ((destination.timerNorth > 0 and destination.timerSouth > 0) or (targetPole == "north" and destination.timerNorth > 0) or (targetPole == "south" and destination.timerSouth > 0)):
+                    sleep(.1)
+                else:
+                    rocket.voyage(destination, targetPole)
             else:
-                rocket.voyage(destination)
+                print("Todos os planetas foram terraformados! Programa sendo finalizado...")
+                a = input("Aperte enter para finalizar o programa. ")
+                os._exit(1)
 
     def refuel_oil(self):
         mines = globals.get_mines_ref() #busca dict de minas

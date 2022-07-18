@@ -20,6 +20,10 @@ moon_need_resources = False #variável destinada a saber se a lua precisa de rec
 lions_alive = 0
 mutex_lion = Lock()
 
+mutexHabitable = Lock()
+unhabitablePlanets = 3
+
+
 '''
 mutexRocketLaunches = {
     'alcantara': alcantara,
@@ -28,6 +32,24 @@ mutexRocketLaunches = {
     'moon': moon
 }
 '''
+
+# Teste ----------------------------
+def acquireHabitable():
+    global mutexHabitable
+    mutexHabitable.acquire()
+
+def releaseHabitable():
+    global mutexHabitable
+    mutexHabitable.release()
+
+def setUnhabitablePlanets(n):
+    global unhabitablePlanets
+    unhabitablePlanets = n
+
+def getUnhabitablePlanets():
+    global unhabitablePlanets
+    return unhabitablePlanets
+# Fim do teste ------------------------
 
 
 # Quando um planeta for atingido por uma bomba, garante que a nuke_detected do planeta seja executada completamente.

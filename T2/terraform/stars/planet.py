@@ -43,6 +43,21 @@ class Planet(Thread):
                     print(f"Erro! Polo atingido do corpo celeste {threading.currentThread()} não foi identificado.")
         globals.releasePlanetBombed()
 
+        # Teste.
+        globals.acquireHabitable()
+        if self.terraform <= 0:
+            print(f"{self.name} terraformado com sucesso!")
+            self.alive = False
+            '''
+            if (globals.getUnhabitablePlanets() > 0):
+                globals.setUnhabitablePlanets(globals.getUnhabitablePlanets() - 1)
+            else:
+                print("Todos os planetas foram terraformados! Programa sendo finalizado...")
+                a = input("Aperte enter para finalizar o programa. ")
+                os._exit(1)
+            '''
+        globals.releaseHabitable()
+
     def print_planet_info(self):
         print(f"🪐 - [{self.name}] → {self.terraform}% UNINHABITABLE")
 
@@ -69,6 +84,3 @@ class Planet(Thread):
                 self.timerSouth -= 1
             globals.releaseNukeTimerDecrease()
             
-            #TODO retirar isso aqui depois
-            #if (random.randint(0, 50) == 5):
-            #    self.nuke_detected(5, random.choice(["north", "south"]))
