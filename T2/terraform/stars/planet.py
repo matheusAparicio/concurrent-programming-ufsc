@@ -58,8 +58,6 @@ class Planet(Thread):
         self.print_planet_info()
         globals.release_print()
 
-        print(f"--------{threading.currentThread()}--------\n")
-
         while(globals.get_release_system() == False):
             pass
 

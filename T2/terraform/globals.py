@@ -24,10 +24,8 @@ mutex_lion = Lock()
 lock_oil = Lock()
 lock_uranium = Lock()
 
-conditionHabitable = Condition()
-unhabitablePlanets = 3
 
-
+# Mutex usado no voyage do rocket.py para definir o comportamento do foguete.
 def acquireRocketNukePlanet():
     global mutexRocketNukePlanet
     mutexRocketNukePlanet.acquire()
@@ -35,24 +33,6 @@ def acquireRocketNukePlanet():
 def releaseRocketNukePlanet():
     global mutexRocketNukePlanet
     mutexRocketNukePlanet.release()
-
-# Funções do Condition criado para controlar quando um planeta se torna habitável. (Ainda não usado corretamente)
-def waitHabitable():
-    global conditionHabitable
-    conditionHabitable.wait()
-
-def notifyHabitable():
-    global conditionHabitable
-    conditionHabitable.notify()
-
-def acquireHabitable():
-    global conditionHabitable
-    conditionHabitable.acquire()
-
-def releaseHabitable():
-    global conditionHabitable
-    conditionHabitable.release()
-
 
 # Quando um planeta for atingido por uma bomba, garante que a nuke_detected do planeta seja executada completamente.
 def acquirePlanetBombed():
@@ -63,7 +43,7 @@ def releasePlanetBombed():
     global mutexPlanetBombed
     mutexPlanetBombed.release()
 
-# Garante que os timers dos polos norte e sul sejam decrementados juntos dos planetas.
+# Garante que os timers dos polos norte e sul dos planetas sejam decrementados juntos.
 def acquireNukeTimerDecrease():
     global mutexNukeTimerDecrease
     mutexNukeTimerDecrease.acquire()
