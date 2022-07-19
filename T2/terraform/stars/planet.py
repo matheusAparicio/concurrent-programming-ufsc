@@ -1,8 +1,4 @@
 from threading import Thread
-import threading #TODO remover
-from time import sleep #TODO remover
-import random #TODO remover
-
 import globals
 
 class Planet(Thread):

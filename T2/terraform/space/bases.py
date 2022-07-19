@@ -1,9 +1,8 @@
 from logging import exception
 import globals
-from threading import Thread, Condition, Lock
+from threading import Thread
 from space.rocket import Rocket
 from random import *
-#from random import choice, random
 from time import sleep
 
 import os

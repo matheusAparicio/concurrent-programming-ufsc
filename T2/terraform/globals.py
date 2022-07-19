@@ -1,4 +1,4 @@
-from threading import Lock, Condition
+from threading import Lock
 
 #  A total alteração deste arquivo é permitida.
 #  Lembre-se de que algumas variáveis globais são setadas no arquivo simulation.py
