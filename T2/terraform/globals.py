@@ -12,6 +12,7 @@ release_system = False
 mutex_print = Lock()
 mutexNukeTimerDecrease = Lock()
 mutexPlanetBombed = Lock()
+mutexRocketNukePlanet = Lock()
 planets = {}
 bases = {}
 mines = {}
@@ -26,6 +27,14 @@ lock_uranium = Lock()
 conditionHabitable = Condition()
 unhabitablePlanets = 3
 
+
+def acquireRocketNukePlanet():
+    global mutexRocketNukePlanet
+    mutexRocketNukePlanet.acquire()
+
+def releaseRocketNukePlanet():
+    global mutexRocketNukePlanet
+    mutexRocketNukePlanet.release()
 
 # Funções do Condition criado para controlar quando um planeta se torna habitável. (Ainda não usado corretamente)
 def waitHabitable():
@@ -43,16 +52,6 @@ def acquireHabitable():
 def releaseHabitable():
     global conditionHabitable
     conditionHabitable.release()
-
-# Globais contendo o número de planetas não habitáveis. (Por enquanto não é usada)
-def setUnhabitablePlanets(n):
-    global unhabitablePlanets
-    unhabitablePlanets = n
-
-def getUnhabitablePlanets():
-    global unhabitablePlanets
-    return unhabitablePlanets
-# Fim do teste ------------------------
 
 
 # Quando um planeta for atingido por uma bomba, garante que a nuke_detected do planeta seja executada completamente.

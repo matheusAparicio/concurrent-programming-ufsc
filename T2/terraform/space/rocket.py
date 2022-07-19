@@ -27,10 +27,12 @@ class Rocket:
         self.simulation_time_voyage(planet)
         failure =  self.do_we_have_a_problem()
         
-        if (failure):
+        globals.acquireRocketNukePlanet()
+        if (failure or planet.alive == False):
             pass
         else:
             self.nuke(planet, pole)
+        globals.releaseRocketNukePlanet()
 
     def voyage_to_moon(self):
         print(f'Foguete {self.name} com ID {self.id} indo pra Lua')
